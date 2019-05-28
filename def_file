@@ -4,9 +4,13 @@ From: ubuntu
 %post
    apt-get update
    apt-get install git --yes
+   apt-get install python3 --yes
+   apt-get install python3-pip --yes
 
-   git clone https://github.com/atom/atom
-   git clone https://github.com/jotelha/fireworks
+   # pip install -r python_packages.txt
+
+   # git clone --bare https://github.com/atom/atom /opt/atom
+   git clone --bare https://github.com/jotelha/fireworks /opt/fireworks
 
 %files
     python_packages.txt 
@@ -40,24 +44,3 @@ From: ubuntu
 
 %appfiles foo
    foo.txt
-
-##############################
-# bar
-##############################
-
-%apphelp bar
-    This is the help for bar.
-
-%applabels bar
-   BESTAPP BAR
-
-%appinstall bar
-    touch bar.exec
-
-%appenv bar
-    SOFTWARE=bar
-    export SOFTWARE
-
-%apprun bar
-    exec echo "RUNNING $SOFTWARE, global var is $GLOBAL"
-    ls
