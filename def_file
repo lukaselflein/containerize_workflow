@@ -1,46 +1,24 @@
-Bootstrap: docker
-From: ubuntu
+Bootstrap: library
+From: ubuntu:18.04
 
 %post
-   apt-get update
-   apt-get install git --yes
-   apt-get install python3 --yes
-   apt-get install python3-pip --yes
+   echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" >> /etc/apt/sources.list
+   echo "deb http://archive.ubuntu.com/ubuntu bionic-security main universe" >> /etc/apt/sources.list
+   echo "deb http://archive.ubuntu.com/ubuntu bionic-updates main universe" >> /etc/apt/sources.list
+   cat /etc/apt/sources.list
 
-   # pip install -r python_packages.txt
+   apt update
+   apt install -y python3
+   apt install -y python3-pip
+
+#   apt-get install curl --yes
+#   curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+#   python3 get-pip.py
+
+   pip3 install -r python_packages.txt
 
    # git clone --bare https://github.com/atom/atom /opt/atom
-   git clone --bare https://github.com/jotelha/fireworks /opt/fireworks
+#   git clone --bare https://github.com/jotelha/fireworks /opt/fireworks
 
 %files
     python_packages.txt 
-
-%environment
-    GLOBAL=variables
-    AVAILABLE="to all apps"
-    export GLOBAL AVAILABLE
-
-##############################
-# foo
-##############################
-
-%apprun foo
-    echo "RUNNING $SOFTWARE, global var is $GLOBAL"
-    ls
-    exit
-
-%applabels foo
-   BESTAPP FOO
-
-%appinstall foo
-   touch foo.exec
-
-%appenv foo
-    SOFTWARE=foo
-    export SOFTWARE
-
-%apphelp foo
-    This is the help for foo.
-
-%appfiles foo
-   foo.txt
